@@ -65,7 +65,7 @@ gh-pages:
 all: format pylint coverage check-security pip-export
 
 build:
-	@python -m build
+	@uv build --wheel --sdist
 
 coverage:
 	@uv run pytest --cov --cov-report=html -vvv
