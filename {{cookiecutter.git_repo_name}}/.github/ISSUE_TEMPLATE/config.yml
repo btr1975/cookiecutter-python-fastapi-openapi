@@ -10,3 +10,6 @@ contact_links:
   - name: pydantic Information
     url: https://pydantic-docs.helpmanual.io/
     about: pydantic Website
+  - name: UV Information
+    url: https://docs.astral.sh/uv/
+    about: UV By Astral Website
