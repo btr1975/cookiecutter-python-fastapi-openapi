@@ -83,6 +83,7 @@ dev = [
     "sphinxcontrib-mermaid",
     "httpx",
     "bandit",
+    "mypy",
     {% if cookiecutter.use_requests == 'y' %}"requests-mock",{% endif %}
 ]
 {% endif %}

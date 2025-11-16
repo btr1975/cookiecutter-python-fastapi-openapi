@@ -1,7 +1,7 @@
 @ECHO OFF
 REM Makefile for project needs
 REM Author: Ben Trachtenberg
-REM Version: 2.0.0
+REM Version: 2.0.1
 REM
 
 SET option=%1
@@ -16,6 +16,7 @@ IF "%option%" == "all" (
     black {{cookiecutter.__app_name}}/
     black tests/
     pylint {{cookiecutter.__app_name}}\
+    mypy {{cookiecutter.__app_name}}\
     pytest --cov --cov-report=html -vvv
     bandit -c pyproject.toml -r .
     pip-audit -r requirements.txt
@@ -63,6 +64,11 @@ IF "%option%" == "check-security" (
     GOTO END
 )
 
+IF "%option%" == "mypy" (
+    mypy {{cookiecutter.__app_name}}\
+    GOTO END
+)
+
 {% if cookiecutter.app_documents_location == 'github-pages' %}
 IF "%option%" == "gh-pages" (
     rmdir /s /q docs\source\code
@@ -78,6 +84,7 @@ IF "%option%" == "all" (
     uv run black {{cookiecutter.__app_name}}/
     uv run black tests/
     uv run pylint {{cookiecutter.__app_name}}\
+    uv run mypy {{cookiecutter.__app_name}}\
     uv run pytest --cov --cov-report=html -vvv
     uv run bandit -c pyproject.toml -r .
     uv export --no-dev --no-emit-project --no-editable > requirements.txt
@@ -121,6 +128,11 @@ IF "%option%" == "check-security" (
     GOTO END
 )
 
+IF "%option%" == "mypy" (
+    uv run mypy {{cookiecutter.__app_name}}\
+    GOTO END
+)
+
 IF "%option%" == "pip-export" (
     uv export --no-dev --no-emit-project --no-editable > requirements.txt
     uv export --no-emit-project --no-editable > requirements-dev.txt
@@ -147,6 +159,7 @@ IF "%option%" == "gh-pages" (
 @ECHO     check-vuln      To check for vulnerabilities in the dependencies
 @ECHO     check-security  To check for vulnerabilities in the code
 @ECHO     format          To format the code with black
+@ECHO     mypy            To run mypy
 @ECHO     pylint          To run pylint
 @ECHO     pytest          To run pytest with verbose option
 {% if cookiecutter.package_manager == 'uv' %}@ECHO     pip-export      To export the requirements.txt and requirements-dev.txt{% endif %}
