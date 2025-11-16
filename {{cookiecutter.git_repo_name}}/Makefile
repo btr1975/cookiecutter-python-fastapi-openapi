@@ -1,10 +1,10 @@
 # Makefile for project needs
 # Author: Ben Trachtenberg
-# Version: 2.0.0
+# Version: 2.0.1
 #
 
 .PHONY: all info build build-container coverage format pylint pytest gh-pages build dev-run start-container \
-	stop-container remove-container check-vuln check-security pip-export
+	stop-container remove-container check-vuln check-security pip-export mypy
 
 info:
 	@echo "make options"
@@ -16,6 +16,7 @@ info:
 	@echo "    coverage            To run coverage and display ASCII and output to htmlcov"
 	@echo "    dev-run             To run the app"
 	@echo "    format              To format the code with black"
+	@echo "    mypy                To run mypy"
 	@echo "    pylint              To run pylint"
 	@echo "    pytest              To run pytest with verbose option"
 	@echo "    start-container     To start the container"
@@ -26,7 +27,7 @@ info:
 
 {% if cookiecutter.package_manager == 'pip' %}
 
-all: format pylint coverage check-security check-vuln
+all: format pylint mypy coverage check-security check-vuln
 
 build:
 	@python -m build
@@ -53,6 +54,9 @@ check-vuln:
 check-security:
 	@bandit -c pyproject.toml -r .
 
+mypy:
+	@mypy {{cookiecutter.__app_name}}/
+
 {% if cookiecutter.app_documents_location == 'github-pages' %}
 gh-pages:
 	@rm -rf ./docs/source/code
@@ -62,7 +66,7 @@ gh-pages:
 
 {% elif cookiecutter.package_manager == 'uv' %}
 
-all: format pylint coverage check-security pip-export
+all: format pylint mypy coverage check-security pip-export
 
 build:
 	@uv build --wheel --sdist
@@ -85,6 +89,9 @@ dev-run:
 
 check-security:
 	@uv run bandit -c pyproject.toml -r .
+
+mypy:
+	@uv run mypy {{cookiecutter.__app_name}}/
 
 pip-export:
 	@uv export --no-dev --no-emit-project --no-editable > requirements.txt
