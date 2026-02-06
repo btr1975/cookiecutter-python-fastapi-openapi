@@ -16,4 +16,3 @@ httpx
 twine
 bandit
 mypy
-{% if cookiecutter.use_requests == 'y' %}requests-mock{% endif %}

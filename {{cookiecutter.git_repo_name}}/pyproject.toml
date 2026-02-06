@@ -38,12 +38,6 @@ classifiers = [
     "Operating System :: Microsoft :: Windows",
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3 :: Only",
-    {% if cookiecutter.minimum_python_version == '3.9' %}"Programming Language :: Python :: 3.9",
-    "Programming Language :: Python :: 3.10",
-    "Programming Language :: Python :: 3.11",
-    "Programming Language :: Python :: 3.12",
-    "Programming Language :: Python :: 3.13",
-    "Programming Language :: Python :: 3.14",{% endif -%}
     {% if cookiecutter.minimum_python_version == '3.10' %}"Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
@@ -67,7 +61,7 @@ dependencies = [
     "fastapi",
     "pydantic",
     "uvicorn",
-    {% if cookiecutter.use_requests == 'y' %}"requests",{% endif %}
+    {% if cookiecutter.use_niquests == 'y' %}"niquests",{% endif %}
     {% if cookiecutter.use_cryptography == 'y' %}"cryptography",{% endif %}
 ]
 
@@ -84,7 +78,6 @@ dev = [
     "httpx",
     "bandit",
     "mypy",
-    {% if cookiecutter.use_requests == 'y' %}"requests-mock",{% endif %}
 ]
 {% endif %}
 
