@@ -34,7 +34,7 @@ async def get_hello(request: Request) -> templates.TemplateResponse:
         'page': 'Hello World from {{ cookiecutter.git_repo_name }}',
         'error': error
     }
-    return templates.TemplateResponse('index.jinja2', {'request': request, 'data': data})
+    return templates.TemplateResponse(request=request, name='index.jinja2', context={'request': request, 'data': data})
 
 
 @router.get('/hello-error', response_class=HTMLResponse, response_model=None,
@@ -58,4 +58,4 @@ async def get_hello_error(request: Request) -> templates.TemplateResponse:
         'page': 'Hello World Error from {{ cookiecutter.git_repo_name }}',
         'error': error
     }
-    return templates.TemplateResponse('index.jinja2', {'request': request, 'data': data})
+    return templates.TemplateResponse(request=request, name='index.jinja2', context={'request': request, 'data': data})
